@@ -10,7 +10,7 @@ import { BookOpen, Search, Bookmark, StickyNote, PlayCircle } from "lucide-react
 import { Progress } from "@/components/ui/progress";
 import { Player } from "@remotion/player";
 import { PLABiharComposition } from "@/remotion/PLABiharComposition";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -20,10 +20,10 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
-} as const;
+  show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
+};
 
 const cycleGradients: Record<number, string> = {
   1: "from-primary/20 to-primary/5",
