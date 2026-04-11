@@ -5,12 +5,6 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
-interface NavLinkCompatProps extends Omit<NavLinkProps, "className"> {
-  className?: string;
-  activeClassName?: string;
-  pendingClassName?: string;
-}
-
 const NavLink = forwardRef<HTMLAnchorElement, any>(
   ({ className, activeClassName, pendingClassName, to, end, ...props }, ref) => {
     const pathname = usePathname();
