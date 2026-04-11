@@ -74,7 +74,7 @@ export default function Index() {
             </div>
             <Progress value={progressPercent} className="h-2" />
           </div>
-        </div>
+        </motion.div>
 
         {/* Video Player */}
         <motion.div variants={itemVariants} className="bg-white rounded-2xl overflow-hidden border shadow-sm">
@@ -94,7 +94,7 @@ export default function Index() {
               autoPlay={false}
             />
           </div>
-        </div>
+        </motion.div>
 
         {/* Quick links */}
         <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -111,7 +111,7 @@ export default function Index() {
               </Card>
             </Link>
           ))}
-        </div>
+        </motion.div>
 
         {/* Meeting cycles */}
         {/* Using a separate motion container per cycle to keep staggering elegant */}
