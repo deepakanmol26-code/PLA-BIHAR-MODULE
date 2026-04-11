@@ -378,6 +378,171 @@ const DEFAULT_RESPONSE: ChatResponse = {
   quickActions: ["PLA क्या है?", "📞 हेल्पलाइन", "स्वास्थ्य सहायता", "गतिविधियां"],
 };
 
+// ─── ASHA Programme Knowledge ──────────────────────────────────
+const ashaKeywords = [
+  "asha", "आशा", "asha didi", "आशा दीदी", "asha kya", "asha guide",
+  "accredited social health", "community health worker",
+];
+
+const ASHA_RESPONSE: ChatResponse = {
+  text: `👩‍⚕️ **ASHA (Accredited Social Health Activist)**
+
+ASHA एक स्वैच्छिक महिला सामुदायिक स्वास्थ्य कार्यकर्ता है।
+
+📊 **प्रमुख आंकड़े:**
+- 1 ASHA प्रति 1000 ग्रामीण जनसंख्या
+- बिहार में 1,08,707 ASHAs (2018-19)
+- ~167 परिवारों की सेवा
+- 52+ प्रोत्साहन गतिविधियां
+
+📋 **पात्रता:**
+- न्यूनतम 10वीं पास
+- आयु 18-40 वर्ष
+- गांव की स्थायी निवासी
+- विवाहित (अविवाहित पात्र नहीं)
+
+🔗 पूरी जानकारी: **/asha** पेज पर जाएं
+
+👉 और क्या जानना चाहेंगे?`,
+  quickActions: ["ASHA कर्तव्य", "ASHA Facilitator", "कल्याण योजना", "📞 हेल्पलाइन"],
+};
+
+const ashaEligKeywords = [
+  "eligibility", "पात्रता", "criteria", "qualification", "योग्यता",
+  "age limit", "आयु सीमा", "शैक्षिक",
+];
+
+const ASHA_ELIGIBILITY_RESPONSE: ChatResponse = {
+  text: `📋 **ASHA पात्रता मानदंड**
+
+सभी शर्तें पूरी होनी चाहिए:
+
+1️⃣ **शिक्षा:** न्यूनतम 10वीं पास
+2️⃣ **आयु:** 18-40 वर्ष
+3️⃣ **निवास:** गांव की स्थायी निवासी (बहू/विधवा पात्र, अविवाहित नहीं)
+4️⃣ **कोई सरकारी संबंध नहीं:** PDS विक्रेता/सरकारी कर्मचारी रिश्तेदार अपात्र
+5️⃣ **कोई मौजूदा पद नहीं:** मुखिया, पंचायत सदस्य, आंगनवाड़ी कार्यकर्ता अपात्र
+6️⃣ **शारीरिक/मानसिक स्वस्थ**
+
+⭐ **प्राथमिकता:** विधवा, परित्यक्ता, तलाकशुदा, प्रशिक्षित दाई
+
+⚠️ अधिकतम कार्य आयु: 60 वर्ष (स्वतः सेवानिवृत्ति)
+
+🔗 विस्तार: /asha पेज → पात्रता खंड`,
+  quickActions: ["चयन प्रक्रिया", "ASHA कर्तव्य", "📞 हेल्पलाइन"],
+};
+
+const ashaDutyKeywords = [
+  "asha duty", "asha duties", "asha kaam", "asha work",
+  "कर्तव्य", "जिम्मेदारी", "asha ka kaam",
+];
+
+const ASHA_DUTIES_RESPONSE: ChatResponse = {
+  text: `💪 **ASHA के मुख्य कर्तव्य**
+
+📢 स्वास्थ्य व्यवहार परिवर्तन संचार
+🏘️ ग्राम स्वास्थ्य योजना कार्यान्वयन
+🤝 आंगनवाड़ी, TBA, ANM, MPW के साथ समन्वय
+💊 पोषण, परिवार नियोजन, मातृ स्वास्थ्य पर परामर्श
+🏥 रेफरल और एस्कॉर्ट
+🎒 दवा किट धारक (ORS, आयरन गोलियां)
+📋 गर्भावस्था, जन्म, मृत्यु, टीकाकरण रजिस्टर
+👶 प्राथमिक उपचार, नवजात देखभाल
+📊 HBNC फॉर्म, मासिक स्वास्थ्य संकेतक
+🎯 52+ प्रोत्साहन गतिविधियां (NHM)
+
+🔗 विस्तार: /asha पेज → कर्तव्य खंड`,
+  quickActions: ["ASHA Facilitator", "प्रदर्शन मूल्यांकन", "📞 हेल्पलाइन"],
+};
+
+const afKeywords = [
+  "facilitator", "फ़ैसिलिटेटर", "af ", "asha facilitator",
+  "asha sahayak", "आशा सहायक",
+];
+
+const AF_RESPONSE: ChatResponse = {
+  text: `👩‍💼 **ASHA Facilitator (AF) कौन है?**
+
+1 ASHA Facilitator प्रति 20 ASHAs चुनी जाती है।
+
+📊 **आंकड़े:**
+- 20,000+ जनसंख्या कवर
+- ~3,334 परिवार
+- 12 प्रमुख कार्य
+
+📋 **AF पात्रता:**
+- मौजूदा ASHA होनी चाहिए (अनिवार्य)
+- न्यूनतम 3 वर्ष ASHA अनुभव
+- उच्च शैक्षिक योग्यता को प्राथमिकता
+- ASHA दिवस पर इंचार्ज MO की अध्यक्षता में चयन
+
+📝 **12 प्रमुख कार्य:**
+I. क्षेत्र भ्रमण  II. मासिक क्लस्टर बैठक
+III. बैठक एजेंडा  IV. वंचितों तक पहुंच
+V. प्रशिक्षण सहायता  VI. ASHA प्रतिस्थापन
+VII. शिकायत निवारण  VIII. दवा किट निरीक्षण
+IX. डेटा संग्रह  X. भुगतान सुनिश्चित
+XI. उपलब्धि दस्तावेजीकरण  XII. अतिरिक्त कार्य
+
+🔗 विस्तार: /asha पेज → AF खंड`,
+  quickActions: ["AF प्रदर्शन", "कल्याण योजना", "📞 हेल्पलाइन"],
+};
+
+const welfareKeywords = [
+  "welfare", "कल्याण", "scheme", "योजना", "pension", "पेंशन",
+  "insurance", "बीमा", "jeevan jyoti", "suraksha", "mandhan",
+  "प्रोत्साहन", "incentive", "salary", "वेतन",
+];
+
+const WELFARE_RESPONSE: ChatResponse = {
+  text: `🎁 **ASHA/AF कल्याण योजनाएं**
+
+1️⃣ **PM श्रम योगी मानधन योजना**
+   💰 ₹3,000/माह पेंशन (60 वर्ष बाद)
+   📋 18-40 वर्ष, आय ≤ ₹15,000/माह
+   💳 50% योगदान केंद्र सरकार
+
+2️⃣ **PM जीवन ज्योति बीमा योजना**
+   💰 ₹2 लाख जीवन बीमा
+   📋 18-50 वर्ष, प्रीमियम ₹330/वर्ष
+   💳 पूरा प्रीमियम केंद्र सरकार वहन
+
+3️⃣ **PM सुरक्षा बीमा योजना**
+   💰 ₹2 लाख दुर्घटना बीमा
+   📋 18-70 वर्ष, प्रीमियम केवल ₹12/वर्ष
+   💳 पूरा प्रीमियम केंद्र सरकार वहन
+
+⚠️ बैंक खाता अनिवार्य (ऑटो-डेबिट)
+
+🔗 विस्तार: /asha पेज → कल्याण खंड`,
+  quickActions: ["ASHA पात्रता", "📞 हेल्पलाइन", "PLA क्या है?"],
+};
+
+const deselectionKeywords = [
+  "deselect", "निष्कासन", "remove", "हटाना", "resign", "इस्तीफा",
+  "retirement", "सेवानिवृत्ति",
+];
+
+const DESELECTION_RESPONSE: ChatResponse = {
+  text: `❌ **ASHA/AF निष्कासन कारण**
+
+1. अन्य रोजगार (आंगनवाड़ी, शिक्षा मित्र) में शामिल
+2. ANM/विभाग से सहयोग न मिलने पर कार्य नहीं
+3. संपन्न परिवार — काम करने को तैयार नहीं
+4. मुखिया/पंचायत/वार्ड सदस्य निर्वाचित
+5. अपरिहार्य कारणों से कार्य असंभव
+
+📋 **प्रक्रिया:**
+- BCM जांच → इंचार्ज MO को प्रस्ताव
+- AF को 15 दिन में स्पष्टीकरण
+- असंतोषजनक → सिविल सर्जन निष्कासन
+- अपील: क्षेत्रीय अपर निदेशक (अंतिम आदेश)
+
+⚠️ इस्तीफे के बाद पुनः चयन का अधिकार नहीं
+⚠️ अधिकतम कार्य आयु: 60 वर्ष`,
+  quickActions: ["ASHA पात्रता", "कल्याण योजना", "📞 हेल्पलाइन"],
+};
+
 // ─── Main Response Engine ──────────────────────────────────────
 export function getChatResponse(input: string): ChatResponse {
   const lower = input.toLowerCase().trim();
@@ -418,24 +583,32 @@ export function getChatResponse(input: string): ChatResponse {
   // 4. Contact/Phone numbers (generic)
   if (contactKeywords.some(k => lower.includes(k.toLowerCase()))) return CONTACT_RESPONSE;
 
-  // 4. Soni story
+  // 5. ASHA-specific queries (before generic health)
+  if (deselectionKeywords.some(k => lower.includes(k.toLowerCase()))) return DESELECTION_RESPONSE;
+  if (welfareKeywords.some(k => lower.includes(k.toLowerCase()))) return WELFARE_RESPONSE;
+  if (ashaDutyKeywords.some(k => lower.includes(k.toLowerCase()))) return ASHA_DUTIES_RESPONSE;
+  if (ashaEligKeywords.some(k => lower.includes(k.toLowerCase()))) return ASHA_ELIGIBILITY_RESPONSE;
+  if (afKeywords.some(k => lower.includes(k.toLowerCase()))) return AF_RESPONSE;
+  if (ashaKeywords.some(k => lower.includes(k.toLowerCase()))) return ASHA_RESPONSE;
+
+  // 6. Soni story
   if (soniKeywords.some(k => lower.includes(k.toLowerCase()))) return SONI_RESPONSE;
 
-  // 5. Activities
+  // 7. Activities
   if (activityKeywords.some(k => lower.includes(k.toLowerCase()))) return ACTIVITY_RESPONSE;
 
-  // 6. Guidelines
+  // 8. Guidelines
   if (guidelineKeywords.some(k => lower.includes(k.toLowerCase()))) return GUIDELINE_RESPONSE;
 
-  // 7. Health topics
+  // 9. Health topics
   if (healthKeywords.some(k => lower.includes(k.toLowerCase()))) return HEALTH_RESPONSE;
 
-  // 8. PLA explanation
+  // 10. PLA explanation
   if (plaKeywords.some(k => lower.includes(k.toLowerCase()))) return PLA_RESPONSE;
 
-  // 9. Greeting
+  // 11. Greeting
   if (greetingKeywords.some(k => lower.includes(k.toLowerCase()))) return GREETING_RESPONSE;
 
-  // 10. Default
+  // 12. Default
   return DEFAULT_RESPONSE;
 }

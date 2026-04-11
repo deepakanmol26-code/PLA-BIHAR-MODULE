@@ -6,7 +6,7 @@ import { Layout } from "@/components/Layout";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { meetings, cycleNames } from "@/data/bookContent";
 import { useReadProgress } from "@/hooks/useReadProgress";
-import { BookOpen, Search, Bookmark, StickyNote, PlayCircle } from "lucide-react";
+import { BookOpen, Search, Bookmark, StickyNote, PlayCircle, UserCheck } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Player } from "@remotion/player";
 import { PLABiharComposition } from "@/remotion/PLABiharComposition";
@@ -47,6 +47,7 @@ export default function Index() {
   const quickLinks = [
     { title: "खोजें", desc: "सभी विषयों में खोजें", icon: Search, to: "/search", color: "bg-primary/10 text-primary" },
     { title: "परिचय", desc: "मार्गदर्शिका का परिचय", icon: BookOpen, to: "/intro", color: "bg-accent/10 text-accent" },
+    { title: "ASHA गाइड", desc: "ASHA दीदी कार्यक्रम", icon: UserCheck, to: "/asha", color: "bg-green-600/10 text-green-600" },
     { title: "बुकमार्क", desc: "सहेजे गए अनुभाग", icon: Bookmark, to: "/bookmarks", color: "bg-blue-500/10 text-blue-500" },
     { title: "नोट्स", desc: "मेरे नोट्स देखें", icon: StickyNote, to: "/notes", color: "bg-purple-500/10 text-purple-500" },
   ];
