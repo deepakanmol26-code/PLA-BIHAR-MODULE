@@ -9,6 +9,7 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -44,15 +45,30 @@ export default function SearchPage() {
 
   return (
     <Layout>
-      <div className="max-w-3xl mx-auto p-4 md:p-8 space-y-6">
-        <div className="bg-gradient-to-br from-primary/15 to-primary/5 rounded-2xl p-6">
+      <motion.div
+        className="max-w-3xl mx-auto p-4 md:p-8 space-y-6"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
+        <motion.div
+          className="bg-gradient-to-br from-primary/15 to-primary/5 rounded-2xl p-6"
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1, duration: 0.4 }}
+        >
           <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2">
             <Search className="h-6 w-6" /> खोजें
           </h1>
           <p className="text-muted-foreground mt-1">सभी बैठकों और अनुभागों में खोजें</p>
-        </div>
+        </motion.div>
 
-        <div className="relative">
+        <motion.div
+          className="relative"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.3 }}
+        >
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             value={query}
@@ -61,39 +77,59 @@ export default function SearchPage() {
             className="pl-10 text-base"
             autoFocus
           />
-        </div>
+        </motion.div>
 
         {query.trim() && (
-          <p className="text-sm text-muted-foreground">{results.length} परिणाम मिले</p>
+          <motion.p
+            className="text-sm text-muted-foreground"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {results.length} परिणाम मिले
+          </motion.p>
         )}
 
-        <div className="space-y-3">
-          {results.map(item => (
-            <Link key={item.id} href={getLink(item)}>
-              <Card className="hover:shadow-md transition-shadow mb-3">
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Badge variant="secondary" className="text-xs">
-                      {item.type === 'intro' ? 'परिचय' : 'बैठक'}
-                    </Badge>
-                    <h3 className="font-medium text-sm">{highlightMatch(item.title)}</h3>
-                  </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed mt-1">
-                    {highlightMatch(item.snippet)}
-                  </p>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
+        <AnimatePresence mode="popLayout">
+          <div className="space-y-3">
+            {results.map((item, idx) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ delay: idx * 0.05, duration: 0.3, ease: "easeOut" }}
+              >
+                <Link href={getLink(item)}>
+                  <Card className="hover:shadow-md transition-shadow mb-3">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Badge variant="secondary" className="text-xs">
+                          {item.type === 'intro' ? 'परिचय' : 'बैठक'}
+                        </Badge>
+                        <h3 className="font-medium text-sm">{highlightMatch(item.title)}</h3>
+                      </div>
+                      <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+                        {highlightMatch(item.snippet)}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </AnimatePresence>
 
         {query.trim() && results.length === 0 && (
-          <div className="text-center py-12">
+          <motion.div
+            className="text-center py-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
             <p className="text-muted-foreground">कोई परिणाम नहीं मिला</p>
             <p className="text-sm text-muted-foreground mt-1">कृपया अलग शब्दों से खोजें</p>
-          </div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
     </Layout>
   );
 }

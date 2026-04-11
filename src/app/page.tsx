@@ -10,6 +10,20 @@ import { BookOpen, Search, Bookmark, StickyNote, PlayCircle } from "lucide-react
 import { Progress } from "@/components/ui/progress";
 import { Player } from "@remotion/player";
 import { PLABiharComposition } from "@/remotion/PLABiharComposition";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+};
 
 const cycleGradients: Record<number, string> = {
   1: "from-primary/20 to-primary/5",
@@ -39,9 +53,14 @@ export default function Index() {
 
   return (
     <Layout>
-      <div className="max-w-5xl mx-auto p-4 md:p-8 space-y-8">
+      <motion.div 
+        className="max-w-5xl mx-auto p-4 md:p-8 space-y-8"
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+      >
         {/* Hero */}
-        <div className="bg-gradient-to-br from-primary/15 via-primary/5 to-transparent rounded-2xl p-6 md:p-10">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-primary/15 via-primary/5 to-transparent rounded-2xl p-6 md:p-10">
           <h1 className="text-2xl md:text-3xl font-bold text-foreground leading-tight">
             सहभागी सीख एवं क्रियान्वयन
           </h1>
@@ -58,7 +77,7 @@ export default function Index() {
         </div>
 
         {/* Video Player */}
-        <div className="bg-white rounded-2xl overflow-hidden border shadow-sm">
+        <motion.div variants={itemVariants} className="bg-white rounded-2xl overflow-hidden border shadow-sm">
           <div className="px-6 py-4 border-b flex items-center gap-2">
              <PlayCircle className="w-5 h-5 text-primary" />
              <h2 className="font-semibold text-lg">PLA Masterclass Video (The Best Ever)</h2>
@@ -78,7 +97,7 @@ export default function Index() {
         </div>
 
         {/* Quick links */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {quickLinks.map(l => (
             <Link key={l.to} href={l.to}>
               <Card className="hover:shadow-md transition-shadow h-full">
@@ -95,11 +114,12 @@ export default function Index() {
         </div>
 
         {/* Meeting cycles */}
+        {/* Using a separate motion container per cycle to keep staggering elegant */}
         {[1, 2, 3, 4].map(cycle => {
           const cycleMeetings = meetings.filter(m => m.cycle === cycle);
           if (cycleMeetings.length === 0) return null;
           return (
-            <div key={cycle} className="space-y-3">
+            <motion.div key={cycle} variants={itemVariants} className="space-y-3">
               <h2 className="text-lg font-semibold">{cycleNames[cycle]}</h2>
               <div className="grid gap-3 md:grid-cols-2">
                 {cycleMeetings.map(m => (
@@ -124,10 +144,10 @@ export default function Index() {
                   </Link>
                 ))}
               </div>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </Layout>
   );
 }

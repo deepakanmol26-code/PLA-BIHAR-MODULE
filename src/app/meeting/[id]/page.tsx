@@ -13,6 +13,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Bookmark, BookmarkCheck, ChevronLeft, ChevronRight, Clock, Target, Wrench, Package, Trash2, Send } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.07, type: "spring", stiffness: 260, damping: 22 }
+  })
+};
 
 export default function MeetingPage() {
   const { id } = useParams<{ id: string }>();
@@ -58,9 +68,13 @@ export default function MeetingPage() {
 
   return (
     <Layout>
-      <div className="max-w-3xl mx-auto p-4 md:p-8 space-y-6">
+      <motion.div
+        className="max-w-3xl mx-auto p-4 md:p-8 space-y-6"
+        initial="hidden"
+        animate="show"
+      >
         {/* Header */}
-        <div className={`bg-gradient-to-br ${cycleBg[meeting.cycle]} rounded-2xl p-6`}>
+        <motion.div variants={fadeUp} custom={0} className={`bg-gradient-to-br ${cycleBg[meeting.cycle]} rounded-2xl p-6`}>
           <div className="flex items-start justify-between">
             <div>
               <Badge variant="secondary" className="mb-2">{cycleNames[meeting.cycle]}</Badge>
@@ -75,10 +89,10 @@ export default function MeetingPage() {
               {bookmarked ? <BookmarkCheck className="h-5 w-5 text-primary fill-primary" /> : <Bookmark className="h-5 w-5" />}
             </Button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Meta info */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <motion.div variants={fadeUp} custom={1} className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             { icon: Clock, label: "समय", value: meeting.duration },
             { icon: Target, label: "उद्देश्य", value: `${meeting.objectives.length} उद्देश्य` },
@@ -95,43 +109,47 @@ export default function MeetingPage() {
               </CardContent>
             </Card>
           ))}
-        </div>
+        </motion.div>
 
         {/* Objectives */}
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base flex items-center gap-2">
-              <Target className="h-4 w-4 text-primary" /> उद्देश्य
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {meeting.objectives.map((obj, i) => (
-                <li key={i} className="flex gap-2 text-sm">
-                  <span className="text-primary font-bold shrink-0">{i + 1}.</span>
-                  <span>{obj}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+        <motion.div variants={fadeUp} custom={2}>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base flex items-center gap-2">
+                <Target className="h-4 w-4 text-primary" /> उद्देश्य
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {meeting.objectives.map((obj, i) => (
+                  <li key={i} className="flex gap-2 text-sm">
+                    <span className="text-primary font-bold shrink-0">{i + 1}.</span>
+                    <span>{obj}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </motion.div>
 
         {/* Content */}
         {meeting.content.length > 0 && (
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base">विषय सामग्री</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {meeting.content.map((p, i) => (
-                <p key={i} className="text-sm leading-relaxed">{p}</p>
-              ))}
-            </CardContent>
-          </Card>
+          <motion.div variants={fadeUp} custom={3}>
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-base">विषय सामग्री</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {meeting.content.map((p, i) => (
+                  <p key={i} className="text-sm leading-relaxed">{p}</p>
+                ))}
+              </CardContent>
+            </Card>
+          </motion.div>
         )}
 
         {/* Activities */}
-        <div className="space-y-4">
+        <motion.div variants={fadeUp} custom={4} className="space-y-4">
           <h2 className="text-lg font-semibold">गतिविधियाँ</h2>
           {meeting.activities.map((activity, i) => (
             <Card key={i} className="border-l-4 border-l-primary/50">
@@ -145,54 +163,58 @@ export default function MeetingPage() {
               </CardContent>
             </Card>
           ))}
-        </div>
+        </motion.div>
 
         {/* Closing */}
-        <Card className="bg-muted/50">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">बैठक का समापन</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-1.5">
-              {meeting.closingNotes.map((n, i) => (
-                <li key={i} className="text-sm flex gap-2">
-                  <span className="text-muted-foreground">•</span> {n}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+        <motion.div variants={fadeUp} custom={5}>
+          <Card className="bg-muted/50">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">बैठक का समापन</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-1.5">
+                {meeting.closingNotes.map((n, i) => (
+                  <li key={i} className="text-sm flex gap-2">
+                    <span className="text-muted-foreground">•</span> {n}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </motion.div>
 
         {/* Notes */}
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">📝 मेरे नोट्स</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex gap-2">
-              <Textarea
-                value={noteText}
-                onChange={e => setNoteText(e.target.value)}
-                placeholder="यहाँ अपना नोट लिखें..."
-                className="text-sm min-h-[60px]"
-              />
-              <Button size="icon" onClick={handleAddNote} disabled={!noteText.trim()}>
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
-            {sectionNotes.map(note => (
-              <div key={note.id} className="flex items-start gap-2 p-3 bg-muted/50 rounded-lg">
-                <p className="text-sm flex-1">{note.text}</p>
-                <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={() => deleteNote(note.id)}>
-                  <Trash2 className="h-3.5 w-3.5 text-destructive" />
+        <motion.div variants={fadeUp} custom={6}>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base">📝 मेरे नोट्स</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="flex gap-2">
+                <Textarea
+                  value={noteText}
+                  onChange={e => setNoteText(e.target.value)}
+                  placeholder="यहाँ अपना नोट लिखें..."
+                  className="text-sm min-h-[60px]"
+                />
+                <Button size="icon" onClick={handleAddNote} disabled={!noteText.trim()}>
+                  <Send className="h-4 w-4" />
                 </Button>
               </div>
-            ))}
-          </CardContent>
-        </Card>
+              {sectionNotes.map(note => (
+                <div key={note.id} className="flex items-start gap-2 p-3 bg-muted/50 rounded-lg">
+                  <p className="text-sm flex-1">{note.text}</p>
+                  <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={() => deleteNote(note.id)}>
+                    <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                  </Button>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </motion.div>
 
         {/* Navigation */}
-        <div className="flex justify-between pt-4">
+        <motion.div variants={fadeUp} custom={7} className="flex justify-between pt-4">
           {prev ? (
             <Link href={`/meeting/${prev.id}`}>
               <Button variant="outline" size="sm">
@@ -207,8 +229,8 @@ export default function MeetingPage() {
               </Button>
             </Link>
           ) : <div />}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </Layout>
   );
 }
