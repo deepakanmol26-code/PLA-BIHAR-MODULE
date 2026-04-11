@@ -1,4 +1,5 @@
-import { AbsoluteFill, Sequence } from "remotion";
+import { AbsoluteFill, Sequence, staticFile, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import { Audio } from "@remotion/media";
 import { PlaHero } from "./scenes/pla/PlaHero";
 import { PlaCycle } from "./scenes/pla/PlaCycle";
 import { PlaRotation } from "./scenes/pla/PlaRotation";
@@ -9,8 +10,23 @@ import { PlaGuidelines } from "./scenes/pla/PlaGuidelines";
 import { PlaImpact } from "./scenes/pla/PlaImpact";
 
 export const PLABiharComposition = () => {
+  const { fps, durationInFrames } = useVideoConfig();
+
   return (
     <AbsoluteFill style={{ backgroundColor: "#FDFAF7", fontFamily: "'DM Sans', sans-serif" }}>
+      {/* Background Music — soft ambient, looped, with fade-in and fade-out */}
+      <Audio
+        src={staticFile("bg-music.mp3")}
+        loop
+        volume={(f) =>
+          interpolate(
+            f,
+            [0, 2 * fps, durationInFrames - 3 * fps, durationInFrames],
+            [0, 0.35, 0.35, 0],
+            { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+          )
+        }
+      />
       <Sequence from={0} durationInFrames={150}>
         <PlaHero />
       </Sequence>
