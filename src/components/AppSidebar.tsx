@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, Home, Search, Bookmark, StickyNote, ChevronDown } from "lucide-react";
+import { BookOpen, Home, Search, Bookmark, StickyNote, ChevronDown, MessageCircle } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { usePathname } from "next/navigation";
 import {
@@ -15,6 +15,7 @@ const topItems = [
   { title: "खोजें", url: "/search", icon: Search },
   { title: "बुकमार्क", url: "/bookmarks", icon: Bookmark },
   { title: "मेरे नोट्स", url: "/notes", icon: StickyNote },
+  { title: "सहायता चैटबॉट", url: "#chatbot", icon: MessageCircle },
 ];
 
 const cycles = [1, 2, 3, 4];

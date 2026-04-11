@@ -3,6 +3,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
+import { ChatBot } from "@/components/ChatBot";
 
 export const metadata: Metadata = {
   title: "PLA Bihar Module",
@@ -21,6 +22,7 @@ export default function RootLayout({
           {children}
           <Toaster />
           <Sonner />
+          <ChatBot />
         </Providers>
       </body>
     </html>
