@@ -90,6 +90,40 @@ export default function AshaPage() {
           </div>
         </motion.div>
 
+        {/* Cinematic ASHA Story Banner */}
+        <motion.div
+          initial={{ opacity: 0, scale: 1.08 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+          className="relative overflow-hidden"
+        >
+          <div className="relative">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/asha-hero.jpg"
+              alt="ASHA Didi — Ek gaon, jahan sehat ki zarurat hai"
+              className="w-full h-auto object-cover"
+              style={{ maxHeight: "420px", objectPosition: "center 30%" }}
+            />
+            {/* Gradient overlay bottom */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B3E]/80 via-transparent to-[#0D1B3E]/30 pointer-events-none" />
+            {/* Text overlay */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className="absolute bottom-0 left-0 right-0 px-6 pb-5"
+            >
+              <p className="text-white text-lg md:text-xl font-bold drop-shadow-lg" style={{ fontFamily: "'Playfair Display', serif" }}>
+                ASHA + Sarkar + Samudaay = Swasth Jeevan
+              </p>
+              <p className="text-white/70 text-xs mt-1 drop-shadow">
+                एक गांव, जहां सेहत की ज़रूरत है — ASHA दीदी हमेशा साथ 🤝
+              </p>
+            </motion.div>
+          </div>
+        </motion.div>
+
         {/* Gradient divider */}
         <div className="h-[3px] bg-gradient-to-r from-[#D4621A] via-[#E0A820] via-[#2A9B56] to-[#2E6FC8]" />
 
