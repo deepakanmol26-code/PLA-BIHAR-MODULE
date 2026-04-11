@@ -55,6 +55,13 @@ export function ChatBot() {
     }
   }, [isOpen]);
 
+  // Listen for sidebar "open-chatbot" event
+  useEffect(() => {
+    const handler = () => setIsOpen(true);
+    window.addEventListener("open-chatbot", handler);
+    return () => window.removeEventListener("open-chatbot", handler);
+  }, []);
+
   const sendMessage = useCallback((text: string) => {
     if (!text.trim()) return;
 
