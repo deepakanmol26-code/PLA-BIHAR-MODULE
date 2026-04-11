@@ -22,7 +22,7 @@ const fadeUp = {
     y: 0,
     transition: { delay: i * 0.07, type: "spring", stiffness: 260, damping: 22 }
   })
-};
+} as const;
 
 export default function MeetingPage() {
   const { id } = useParams<{ id: string }>();

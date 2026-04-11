@@ -23,7 +23,7 @@ const containerVariants = {
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
-};
+} as const;
 
 const cycleGradients: Record<number, string> = {
   1: "from-primary/20 to-primary/5",
