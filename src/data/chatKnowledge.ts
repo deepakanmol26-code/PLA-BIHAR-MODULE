@@ -2,6 +2,7 @@
 // Rule-based keyword matching for Saharsa district, Bihar
 
 import { findBlockContacts, formatBlockContacts, formatAllBlocks, blockNames } from "./saharsaContacts";
+import { findFacilitiesByBlock, formatFacilityResponse, formatAllFacilities, healthFacilities } from "./facilityLocations";
 
 export interface ChatResponse {
   text: string;
@@ -580,7 +581,24 @@ export function getChatResponse(input: string): ChatResponse {
     };
   }
 
-  // 4. Contact/Phone numbers (generic)
+  // 4. Facility / Hospital / PHC lookup
+  const facilityKeywords = ["hospital", "अस्पताल", "phc", "chc", "facility", "सुविधा", "maps", "map", "नक्शा", "location", "स्थान"];
+  if (facilityKeywords.some(k => lower.includes(k.toLowerCase()))) {
+    // Check if user mentioned a specific block
+    const matchedFacilities = findFacilitiesByBlock(lower);
+    if (matchedFacilities.length > 0) {
+      return {
+        text: formatFacilityResponse(matchedFacilities),
+        quickActions: ["सभी सुविधाएं", "📞 हेल्पलाइन", "ASHA गाइड"],
+      };
+    }
+    return {
+      text: formatAllFacilities(),
+      quickActions: ["Mahishi PHC", "Sonbarsa PHC", "📞 हेल्पलाइन"],
+    };
+  }
+
+  // 5. Contact/Phone numbers (generic)
   if (contactKeywords.some(k => lower.includes(k.toLowerCase()))) return CONTACT_RESPONSE;
 
   // 5. ASHA-specific queries (before generic health)

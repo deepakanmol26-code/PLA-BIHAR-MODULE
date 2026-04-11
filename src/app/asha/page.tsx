@@ -9,9 +9,10 @@ import {
   ashaPerformance, afPerformance, welfareSchemes, reportingForms,
   hrStructure, deselectionReasons, orgChart, orgChartBottom,
 } from "@/data/ashaContent";
+import { healthFacilities } from "@/data/facilityLocations";
 import {
   Users, ShieldCheck, Vote, Heart, ClipboardList, Star, Award, XCircle,
-  Gift, Building2, FileText, BarChart3, ChevronDown, ArrowDown,
+  Gift, Building2, FileText, BarChart3, ChevronDown, ArrowDown, MapPin, ExternalLink,
 } from "lucide-react";
 
 const fadeUp: Variants = {
@@ -35,6 +36,7 @@ const sections = [
   { id: "welfare", label: "कल्याण योजनाएं", icon: Gift },
   { id: "hr", label: "HR संरचना", icon: Building2 },
   { id: "forms", label: "रिपोर्टिंग फॉर्म", icon: FileText },
+  { id: "facilities", label: "स्वास्थ्य सुविधाएं", icon: MapPin },
 ];
 
 const colorMap: Record<string, string> = {
@@ -438,6 +440,72 @@ export default function AshaPage() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+          </motion.section>
+
+          {/* 13. HEALTH FACILITIES */}
+          <motion.section id="facilities" initial="hidden" whileInView="show" viewport={{ once: true, margin: "-50px" }}>
+            <SectionTitle icon={MapPin} color="#1A4A8A" title="स्वास्थ्य सुविधाएं — Google Maps स्थान" />
+            <p className="text-sm text-muted-foreground mb-4 pl-5">सहरसा जिले के सभी PHC, CHC और अस्पताल — Google Maps पर सीधे देखें</p>
+
+            {/* District HQ */}
+            <h4 className="text-xs font-semibold text-[#0D1B3E] mb-2 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#D4621A]"></span>
+              जिला मुख्यालय
+            </h4>
+            <div className="grid md:grid-cols-2 gap-2 mb-5">
+              {healthFacilities.filter(f => f.block === "Saharsa HQ").map((f, i) => (
+                <motion.div key={i} variants={fadeUp} custom={i}>
+                  <a
+                    href={f.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex gap-3 items-center p-3 bg-gradient-to-r from-[#FEF0E8] to-white border border-[#F4A46A] rounded-xl hover:shadow-md hover:border-[#D4621A] transition-all group"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-[#D4621A] text-white flex items-center justify-center shrink-0">
+                      <MapPin className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-xs font-semibold text-[#0D1B3E]">{f.name}</p>
+                      <p className="text-[10px] text-gray-500">{f.category} • {"\u2B50".repeat(Math.round(f.rating))} {f.rating}/5</p>
+                    </div>
+                    <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#D4621A] transition-colors" />
+                  </a>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Block-level facilities */}
+            <h4 className="text-xs font-semibold text-[#0D1B3E] mb-2 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#1A6B3A]"></span>
+              ब्लॉक PHC / CHC
+            </h4>
+            <div className="grid md:grid-cols-2 gap-2">
+              {healthFacilities.filter(f => f.block !== "Saharsa HQ").map((f, i) => (
+                <motion.div key={i} variants={fadeUp} custom={i}>
+                  <a
+                    href={f.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex gap-3 items-center p-3 bg-white border rounded-xl hover:shadow-md hover:border-[#1A6B3A] transition-all group"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-[#1A6B3A] text-white flex items-center justify-center shrink-0">
+                      <MapPin className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-xs font-semibold text-[#0D1B3E]">{f.name}</p>
+                      <p className="text-[10px] text-gray-500">
+                        <span className="font-medium text-[#1A6B3A]">{f.block}</span> • {"\u2B50".repeat(Math.round(f.rating))} {f.rating}/5
+                      </p>
+                    </div>
+                    <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#1A6B3A] transition-colors" />
+                  </a>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="mt-4 bg-[#E8F0FB] border-l-4 border-[#2E6FC8] rounded-r-lg p-3 text-xs text-gray-600">
+              📍 सभी स्थान Google Maps Place ID से लिंक हैं। क्लिक करें और सीधे Google Maps में नेविगेट करें। 🚑 एम्बुलेंस: 108 | 🤰 जननी: 102
             </div>
           </motion.section>
 
