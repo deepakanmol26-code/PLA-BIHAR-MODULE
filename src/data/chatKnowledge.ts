@@ -1,6 +1,8 @@
 // PLA Health Assistant — Knowledge Engine
 // Rule-based keyword matching for Saharsa district, Bihar
 
+import { findBlockContacts, formatBlockContacts, formatAllBlocks, blockNames } from "./saharsaContacts";
+
 export interface ChatResponse {
   text: string;
   isEmergency?: boolean;
@@ -56,13 +58,11 @@ const CONTACT_RESPONSE: ChatResponse = {
 🏥 **स्वास्थ्य हेल्पलाइन:** 104
 👶 **चाइल्ड हेल्पलाइन:** 1098
 
-📍 **स्थानीय सहायता:**
-- अपने नजदीकी **ASHA दीदी** से संपर्क करें
-- **आंगनवाड़ी केंद्र** जाएं
-- ब्लॉक स्तर पर **PHC (प्राथमिक स्वास्थ्य केंद्र)** से मिलें
+📍 **ब्लॉक-स्तरीय अधिकारी:**
+किसी ब्लॉक का नाम लिखें और मैं MOIC, BHM, BCM, BMNE, BAM सभी के नंबर दे दूंगा!
 
-👉 आप किस ब्लॉक या गांव से हैं? मैं और मदद कर सकता/सकती हूं।`,
-  quickActions: ["Meeting जानकारी", "स्वास्थ्य सहायता", "PLA क्या है?"],
+👉 उदाहरण: "Mahishi contact" या "Nauhatta नंबर"`,
+  quickActions: ["Mahishi", "Nauhatta", "Sonbarsa", "सभी ब्लॉक"],
 };
 
 // ─── PLA Explanation ───────────────────────────────────────────
@@ -397,7 +397,25 @@ export function getChatResponse(input: string): ChatResponse {
     return meetingResponses[numOnly[1]];
   }
 
-  // 3. Contact/Phone numbers
+  // 3. Block-specific contact lookup (check BEFORE generic contact)
+  const blockMatch = findBlockContacts(lower);
+  if (blockMatch) {
+    return {
+      text: formatBlockContacts(blockMatch),
+      quickActions: ["सभी ब्लॉक", "📞 हेल्पलाइन", "PLA क्या है?"],
+    };
+  }
+
+  // 3b. "सभी ब्लॉक" / "all blocks" / "block list"
+  const allBlockKeywords = ["सभी ब्लॉक", "all block", "block list", "सारे ब्लॉक", "blocks"];
+  if (allBlockKeywords.some(k => lower.includes(k.toLowerCase()))) {
+    return {
+      text: formatAllBlocks(),
+      quickActions: ["Mahishi", "Nauhatta", "Sonbarsa", "📞 हेल्पलाइन"],
+    };
+  }
+
+  // 4. Contact/Phone numbers (generic)
   if (contactKeywords.some(k => lower.includes(k.toLowerCase()))) return CONTACT_RESPONSE;
 
   // 4. Soni story
