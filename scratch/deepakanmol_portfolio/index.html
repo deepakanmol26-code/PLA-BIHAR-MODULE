@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepak Anmol | Cosmic Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --accent: #ffcc33;
+            --accent-glow: rgba(255, 204, 51, 0.4);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body { margin: 0; background-color: #000; overflow: hidden; font-family: 'Inter', -apple-system, sans-serif; color: white; -webkit-font-smoothing: antialiased; }
+        canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: block; z-index: -1; }
+        
+        /* Intro Overlay */
+        #intro-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 100; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
+        }
+
+        .intro-title { font-size: 1.2rem; letter-spacing: 12px; color: var(--accent); margin-bottom: 30px; opacity: 0.8; font-weight: 300; }
+
+        #enter-btn {
+            background: none; border: 1px solid var(--accent); color: var(--accent);
+            padding: 18px 50px; font-size: 1rem; font-weight: 700; border-radius: 50px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 5px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden;
+        }
+
+        #enter-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 40px var(--accent-glow); transform: scale(1.05); }
+
+        /* Main Content Layer */
+        #content-layer {
+            position: relative; z-index: 10; padding: 100px 20px;
+            display: flex; flex-direction: column; align-items: center;
+            opacity: 0; transition: opacity 1.5s ease-in; pointer-events: none;
+        }
+
+        .container { width: 100%; max-width: 1000px; display: flex; flex-direction: column; gap: 60px; }
+
+        /* Sections and Motion Transitions */
+        .section {
+            opacity: 0; transform: translateY(40px) scale(0.95);
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .section.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+        .glass-card {
+            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 32px; padding: 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-size: clamp(3.5rem, 12vw, 5.5rem); margin: 0; background: linear-gradient(135deg, #fff 30%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; letter-spacing: -3px; line-height: 1; }
+        
+        h2 { font-size: 1.8rem; color: var(--accent); margin-bottom: 35px; letter-spacing: 1px; display: flex; align-items: center; gap: 15px; }
+        h2 i { font-size: 1.4rem; opacity: 0.8; }
+
+        .hero-sub { font-size: 1.5rem; color: #bbb; margin: 20px 0 30px 0; font-weight: 400; max-width: 800px; line-height: 1.4; }
+        
+        /* Work Experience Styling */
+        .work-item { margin-bottom: 50px; position: relative; padding-left: 20px; border-left: 1px solid rgba(255,204,51,0.2); }
+        .work-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; flex-wrap: wrap; }
+        .role { font-size: 1.4rem; font-weight: 800; color: white; }
+        .company { color: var(--accent); font-weight: 600; font-size: 1.1rem; margin-bottom: 5px; display: block; }
+        .duration { font-size: 0.9rem; color: #777; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .work-list { margin: 15px 0; padding-left: 20px; list-style: none; }
+        .work-list li { margin-bottom: 12px; color: #ccc; line-height: 1.6; position: relative; }
+        .work-list li::before { content: "→"; position: absolute; left: -25px; color: var(--accent); opacity: 0.7; }
+
+        /* Competencies Grid */
+        .comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .comp-card { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 20px; border: 1px solid var(--glass-border); transition: 0.3s; }
+        .comp-card:hover { background: rgba(255,255,255,0.06); transform: translateY(-5px); border-color: var(--accent); }
+        .comp-name { font-weight: 800; font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .comp-desc { font-size: 0.95rem; color: #999; line-height: 1.5; }
+
+        /* Summary Panel */
+        .summary-box { font-size: 1.2rem; line-height: 1.8; color: #ddd; font-style: italic; border-left: 4px solid var(--accent); padding-left: 30px; margin: 40px 0; }
+
+        /* Contact & CTA */
+        .contact-bar { display: flex; flex-wrap: wrap; gap: 30px; margin-top: 30px; justify-content: center; }
+        .contact-item { display: flex; align-items: center; gap: 10px; color: #aaa; text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.95rem; }
+        .contact-item:hover { color: var(--accent); transform: scale(1.05); }
+        .contact-item i { color: var(--accent); font-size: 1.1rem; }
+
+        .cta-btn { background: var(--accent); color: #000; padding: 14px 28px; border-radius: 12px; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; }
+        .cta-btn:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+
+        .joiner-tag { background: #10b981; color: white; padding: 6px 15px; border-radius: 8px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-top: 15px; }
+
+        /* Animation Keyframes */
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .floating { animation: float 6s ease-in-out infinite; }
+
+        /* Scroll Progress */
+        #progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); z-index: 1000; transition: width 0.1s; width: 0%; }
+    </style>
+</head>
+<body>
+    <div id="progress"></div>
+
+    <div id="intro-overlay">
+        <div class="intro-title">INITIATING COSMIC SEQUENCE</div>
+        <h1 style="font-size: 2.5rem; margin-bottom: 40px; text-align: center;">DEEPAK ANMOL<br><span style="font-size: 1rem; color: #777;">PMU OPERATIONS & ECOSYSTEMS</span></h1>
+        <button id="enter-btn">ENTER PORTFOLIO</button>
+    </div>
+
+    <div id="content-layer">
+        <div class="container">
+            <!-- HERO -->
+            <div class="section visible floating" style="text-align: center; margin-top: 5vh; margin-bottom: 120px;">
+                <h1>Deepak Anmol</h1>
+                <p class="hero-sub">Driving Institutional Excellence & Large-Scale Skill Development through Ecosystem Strengthening.</p>
+                <div class="contact-bar">
+                    <a href="mailto:deepakanmol26@gmail.com" class="contact-item"><i class="fas fa-envelope"></i> deepakanmol26@gmail.com</a>
+                    <a href="https://linkedin.com/in/deepakanmol" target="_blank" class="contact-item"><i class="fab fa-linkedin"></i> linkedin.com/in/deepakanmol</a>
+                    <div class="contact-item"><i class="fas fa-phone"></i> +91 9509603144</div>
+                </div>
+                <div class="joiner-tag">Immediate Joiner</div>
+            </div>
+
+            <!-- SUMMARY -->
+            <div class="section">
+                <div class="summary-box">
+                    Dedicated professional with nearly four years of experience in PMU operations, government coordination, and large-scale skill development implementation. Addept at managing high-level stakeholder relationships to drive institutional excellence.
+                </div>
+            </div>
+
+            <!-- COMPETENCIES -->
+            <div class="section">
+                <div class="glass-card">
+                    <h2><i class="fas fa-bolt"></i> Core Competencies</h2>
+                    <div class="comp-grid">
+                        <div class="comp-card">
+                            <div class="comp-name"><i class="fas fa-tasks"></i> PMU Operations</div>
+                            <div class="comp-desc">Day-to-day coordination, Action Trackers, Note Sheets, and Briefing Notes aligned to PMU functionality.</div>
+                        </div>
+                        <div class="comp-card">
+                            <div class="comp-name"><i class="fas fa-landmark"></i> Govt. Coordination</div>
+                            <div class="comp-desc">Liaison with PCS officers, SCERT, and School Education departments to drive institutional goals.</div>
+                        </div>
+                        <div class="comp-card">
+                            <div class="comp-name"><i class="fas fa-project-diagram"></i> Skill Ecosystem</div>
+                            <div class="comp-desc">NSQF & NEP-aligned Curriculum Design, NCVET Compliance, and ITI Monitoring.</div>
+                        </div>
+                        <div class="comp-card">
+                            <div class="comp-name"><i class="fas fa-chart-line"></i> Monitoring & AE</div>
+                            <div class="comp-desc">SOP Development, qualitative Impact Assessment, and Structured Field Observations.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXPERIENCE -->
+            <div class="section">
+                <div class="glass-card">
+                    <h2><i class="fas fa-briefcase"></i> Professional Experience</h2>
+                    
+                    <div class="work-item">
+                        <div class="work-header">
+                            <div>
+                                <span class="role">Project Manager</span>
+                                <span class="company">Kshamtalaya Foundation</span>
+                            </div>
+                            <span class="duration">Aug 2025 – Present</span>
+                        </div>
+                        <ul class="work-list">
+                            <li><strong>Skill Curriculum:</strong> Designed and executed a 30-day "Career Readiness Accelerator" for 5 fellows, focusing on employability skills.</li>
+                            <li><strong>Assessment Quality:</strong> Spearheaded large-scale endline assessments across 28 schools to identify institutional gaps.</li>
+                            <li><strong>PMU Documentation:</strong> Managed ₹55,000 budget tracking framework for intensive boot camps.</li>
+                        </ul>
+                    </div>
+
+                    <div class="work-item">
+                        <div class="work-header">
+                            <div>
+                                <span class="role">Assistant Regional Manager Training</span>
+                                <span class="company">Magic Bus India Foundation</span>
+                            </div>
+                            <span class="duration">Jun 2024 – Aug 2025</span>
+                        </div>
+                        <ul class="work-list">
+                            <li><strong>Convergence:</strong> Strengthened relationships with DIET Principals and BEOs for seamless resource sharing.</li>
+                            <li><strong>NEP Content:</strong> Led curriculum design for Life Skills & Financial Literacy aligned with NEP frameworks.</li>
+                            <li><strong>Research:</strong> Analyzed large datasets to generate district-level insights for government monitoring.</li>
+                        </ul>
+                    </div>
+
+                    <div class="work-item">
+                        <div class="work-header">
+                            <div>
+                                <span class="role">Gandhi Fellow</span>
+                                <span class="company">Piramal Foundation</span>
+                            </div>
+                            <span class="duration">Jun 2022 – Jun 2024</span>
+                        </div>
+                        <ul class="work-list">
+                            <li><strong>ITI Strengthening:</strong> Integrated digital learning modules across 65+ companies and local government bodies.</li>
+                            <li><strong>Multi-Stakeholder:</strong> Coordinated Village Panchayats, ESI facilities, and employers for village-level engagement.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EDUCATION -->
+            <div class="section">
+                <div class="glass-card">
+                    <h2><i class="fas fa-graduation-cap"></i> Education & Research</h2>
+                    <div class="work-item" style="border:none; padding-left:0;">
+                        <div class="item-title">MA in Sociology <span>2020 – 2022</span></div>
+                        <div class="item-subtitle">Central University of South Bihar, Gaya</div>
+                        <p class="item-desc">Authored evidence-based report on rural social fabric, demonstrating high-level documentation skills.</p>
+                    </div>
+                    <div class="work-item" style="border:none; padding-left:0;">
+                        <div class="item-title">Bachelor of Business Administration (BBA) <span>2017 – 2020</span></div>
+                        <div class="item-subtitle">Lalit Narayan Mithila University</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CERTIFICATIONS -->
+            <div class="section" style="margin-bottom: 120px;">
+                <div class="glass-card">
+                    <h2><i class="fas fa-certificate"></i> Certifications</h2>
+                    <div class="tags">
+                        <span class="tag"><i class="fas fa-check"></i> Lean Six Sigma (KEF)</span>
+                        <span class="tag"><i class="fas fa-check"></i> Evaluation of Training (VV Giri Institute)</span>
+                        <span class="tag"><i class="fas fa-check"></i> Soft Skill Master Trainer (NIST)</span>
+                        <span class="tag"><i class="fas fa-check"></i> Land & Property Rights (AKRSP)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3D ENGINE -->
+    <script type="module">
+        import * as THREE from 'https://cdn.skypack.dev/three@0.136.0';
+        import { OrbitControls } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls.js';
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 5000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+
+        const pointLight = new THREE.PointLight(0xffffff, 3.5, 1000);
+        pointLight.position.set(20, 50, 80);
+        scene.add(pointLight);
+        scene.add(new THREE.AmbientLight(0x404040, 1.2));
+
+        const loader = new THREE.TextureLoader();
+        loader.setCrossOrigin('anonymous');
+
+        const sun = new THREE.Mesh(
+            new THREE.SphereGeometry(18, 64, 64), 
+            new THREE.MeshBasicMaterial({ map: loader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/sun.jpg') })
+        );
+        scene.add(sun);
+
+        const createP = (size, url, dist, speed, angle) => {
+            const mesh = new THREE.Mesh(new THREE.SphereGeometry(size, 64, 64), new THREE.MeshStandardMaterial({ map: loader.load(url), roughness: 0.7 }));
+            mesh.position.x = dist;
+            const orbit = new THREE.Group(); orbit.rotation.y = angle; orbit.add(mesh);
+            scene.add(orbit);
+            return { mesh, orbit, speed };
+        };
+
+        const planets = [
+            createP(3, 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg', 60, 0.004, 2),
+            createP(6, 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/jupiter.jpg', 100, 0.002, 5)
+        ];
+
+        const starGeo = new THREE.BufferGeometry();
+        const starsPositions = new Float32Array(12000 * 3);
+        for(let i=0; i < 12000 * 3; i++) starsPositions[i] = (Math.random() - 0.5) * 3500;
+        starGeo.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
+        const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ size: 1.2, color: 0xffffff, transparent: true, opacity: 0.8 }));
+        scene.add(stars);
+
+        // START STATE: Deep Zoom Out
+        camera.position.set(0, 400, 2500); 
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.enabled = false;
+
+        let entered = false;
+        document.getElementById('enter-btn').onclick = () => {
+            document.getElementById('intro-overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('intro-overlay').style.visibility = 'hidden';
+                document.getElementById('content-layer').style.opacity = '1';
+                document.getElementById('content-layer').style.pointerEvents = 'auto';
+                document.body.style.overflow = 'auto';
+                entered = true;
+                controls.enabled = true;
+            }, 1200);
+        };
+
+        const observer = new IntersectionObserver(eb => eb.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
+        document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+        function animate() {
+            requestAnimationFrame(animate);
+            sun.rotation.y += 0.001;
+            planets.forEach(p => { p.orbit.rotation.y += p.speed; p.mesh.rotation.y += 0.01; });
+            
+            if (entered) {
+                const scroll = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight || 1);
+                const targetZ = 150 + (scroll * 120);
+                const targetY = 30 - (scroll * 40);
+                camera.position.lerp(new THREE.Vector3(0, targetY, targetZ), 0.1); 
+                document.getElementById('progress').style.width = (scroll * 100) + '%';
+            } else {
+                camera.position.z -= 0.5; // Subtle approach drift
+            }
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.onresize = () => { camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); };
+    </script>
+</body>
+</html>
