@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, Home, Search, Bookmark, StickyNote, ChevronDown, MessageCircle, UserCheck, MapPin } from "lucide-react";
+import { BookOpen, Home, Search, Bookmark, StickyNote, ChevronDown, MessageCircle, UserCheck, MapPin, ExternalLink } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { usePathname } from "next/navigation";
 import {
@@ -124,6 +124,24 @@ export function AppSidebar() {
                 </SidebarGroup>
               );
             })}
+
+            <SidebarGroup>
+              <SidebarGroupLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground mt-4">
+                महत्वपूर्ण लिंक
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <a href="https://ekjutindia.org/" target="_blank" rel="noopener noreferrer" className="hover:bg-sidebar-accent/50 text-indigo-600 dark:text-indigo-400">
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        <span className="font-semibold">Ekjut India</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
           </>
         )}
       </SidebarContent>
