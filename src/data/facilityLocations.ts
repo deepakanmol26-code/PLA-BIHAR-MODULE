@@ -17,7 +17,7 @@ export const healthFacilities: HealthFacility[] = [
     category: "Hospital",
     rating: 3.2,
     placeId: "ChIJzeKma_I97jkRTFSFuuzwWqc",
-    mapsUrl: "https://www.google.com/maps/place/?q=place_id:ChIJzeKma_I97jkRTFSFuuzwWqc",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Sadar+Hospital&query_place_id=ChIJzeKma_I97jkRTFSFuuzwWqc",
   },
   {
     name: "District Health Society",
@@ -25,7 +25,7 @@ export const healthFacilities: HealthFacility[] = [
     category: "Hospital",
     rating: 2.5,
     placeId: "ChIJ_2j9lfM97jkRobz6taSMH8o",
-    mapsUrl: "https://www.google.com/maps/place/?q=place_id:ChIJ_2j9lfM97jkRobz6taSMH8o",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=District+Health+Society&query_place_id=ChIJ_2j9lfM97jkRobz6taSMH8o",
   },
 
   // CHCs & PHCs by Block
@@ -35,7 +35,7 @@ export const healthFacilities: HealthFacility[] = [
     category: "Hospital",
     rating: 3.4,
     placeId: "ChIJCz5YMeMQ7jkRODtM19sH_i4",
-    mapsUrl: "https://www.google.com/maps/place/?q=place_id:ChIJCz5YMeMQ7jkRODtM19sH_i4",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=PHC+Mahishi&query_place_id=ChIJCz5YMeMQ7jkRODtM19sH_i4",
   },
   {
     name: "Block Office, Nauhatta",
@@ -43,7 +43,7 @@ export const healthFacilities: HealthFacility[] = [
     category: "Government office",
     rating: 4.4,
     placeId: "ChIJ11EOQgAT7jkR_1TYu_L47kc",
-    mapsUrl: "https://www.google.com/maps/place/?q=place_id:ChIJ11EOQgAT7jkR_1TYu_L47kc",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Block+Office+Nauhatta&query_place_id=ChIJ11EOQgAT7jkR_1TYu_L47kc",
   },
   {
     name: "Salkhua PHC",
@@ -51,7 +51,7 @@ export const healthFacilities: HealthFacility[] = [
     category: "Hospital",
     rating: 4.2,
     placeId: "ChIJLSxLqzYg7jkRiUZqzg6F1AA",
-    mapsUrl: "https://www.google.com/maps/place/?q=place_id:ChIJLSxLqzYg7jkRiUZqzg6F1AA",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Salkhua+PHC&query_place_id=ChIJLSxLqzYg7jkRiUZqzg6F1AA",
   },
   {
     name: "CHC Saurbazaar",
@@ -59,7 +59,7 @@ export const healthFacilities: HealthFacility[] = [
     category: "Hospital",
     rating: 4.4,
     placeId: "ChIJyTvL6Wo77jkRcMrEBPo69QA",
-    mapsUrl: "https://www.google.com/maps/place/?q=place_id:ChIJyTvL6Wo77jkRcMrEBPo69QA",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=CHC+Saurbazaar&query_place_id=ChIJyTvL6Wo77jkRcMrEBPo69QA",
   },
   {
     name: "Hospital PHC Banma",
@@ -67,7 +67,7 @@ export const healthFacilities: HealthFacility[] = [
     category: "Hospital",
     rating: 5.0,
     placeId: "ChIJo0NaOAAh7jkR_kKZZSlIIgg",
-    mapsUrl: "https://www.google.com/maps/place/?q=place_id:ChIJo0NaOAAh7jkR_kKZZSlIIgg",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Hospital+PHC+Banma&query_place_id=ChIJo0NaOAAh7jkR_kKZZSlIIgg",
   },
   {
     name: "Bariyahi PHC",
@@ -75,7 +75,7 @@ export const healthFacilities: HealthFacility[] = [
     category: "Hospital",
     rating: 5.0,
     placeId: "ChIJCUrI7zYX7jkR1lVUeoC5k_Q",
-    mapsUrl: "https://www.google.com/maps/place/?q=place_id:ChIJCUrI7zYX7jkR1lVUeoC5k_Q",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Bariyahi+PHC&query_place_id=ChIJCUrI7zYX7jkR1lVUeoC5k_Q",
   },
   {
     name: "PHC Panchgachhiya",
@@ -83,7 +83,7 @@ export const healthFacilities: HealthFacility[] = [
     category: "Hospital",
     rating: 3.9,
     placeId: "ChIJIyjLjRIV7jkRclMkrsvwXNg",
-    mapsUrl: "https://www.google.com/maps/place/?q=place_id:ChIJIyjLjRIV7jkRclMkrsvwXNg",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=PHC+Panchgachhiya&query_place_id=ChIJIyjLjRIV7jkRclMkrsvwXNg",
   },
   {
     name: "Primary Health Center, Patarghat",
@@ -91,7 +91,7 @@ export const healthFacilities: HealthFacility[] = [
     category: "Government office",
     rating: 4.0,
     placeId: "ChIJOSkv-8Iv7jkRmL3GDrIV8Qk",
-    mapsUrl: "https://www.google.com/maps/place/?q=place_id:ChIJOSkv-8Iv7jkRmL3GDrIV8Qk",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Primary+Health+Center+Patarghat&query_place_id=ChIJOSkv-8Iv7jkRmL3GDrIV8Qk",
   },
   {
     name: "Sub-divisional Hospital, Simri Bakhtiyarpur",
@@ -99,7 +99,7 @@ export const healthFacilities: HealthFacility[] = [
     category: "Medical Center",
     rating: 3.5,
     placeId: "ChIJK7eIEAQi7jkRWrTqBsz63LM",
-    mapsUrl: "https://www.google.com/maps/place/?q=place_id:ChIJK7eIEAQi7jkRWrTqBsz63LM",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Sub+divisional+Hospital+Simri+Bakhtiyarpur&query_place_id=ChIJK7eIEAQi7jkRWrTqBsz63LM",
   },
   {
     name: "PHC Sonbarsa",
@@ -107,7 +107,7 @@ export const healthFacilities: HealthFacility[] = [
     category: "Hospital",
     rating: 5.0,
     placeId: "ChIJMzxqbQAn7jkRQWjydTJkKUE",
-    mapsUrl: "https://www.google.com/maps/place/?q=place_id:ChIJMzxqbQAn7jkRQWjydTJkKUE",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=PHC+Sonbarsa&query_place_id=ChIJMzxqbQAn7jkRQWjydTJkKUE",
   },
 ];
 
