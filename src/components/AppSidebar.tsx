@@ -139,6 +139,14 @@ export function AppSidebar() {
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <a href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(09)62042-0/fulltext" target="_blank" rel="noopener noreferrer" className="hover:bg-sidebar-accent/50 text-red-600 dark:text-red-400">
+                        <ExternalLink className="mr-2 h-4 w-4 shrink-0" />
+                        <span className="font-semibold truncate">The Lancet Article</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
