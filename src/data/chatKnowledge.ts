@@ -3,6 +3,7 @@
 
 import { findBlockContacts, formatBlockContacts, formatAllBlocks, blockNames } from "./saharsaContacts";
 import { findFacilitiesByBlock, formatFacilityResponse, formatAllFacilities, healthFacilities } from "./facilityLocations";
+import { findAbbreviation, formatAbbreviationResponse, abbreviations } from "./abbreviations";
 
 export interface ChatResponse {
   text: string;
@@ -596,6 +597,27 @@ export function getChatResponse(input: string): ChatResponse {
       text: formatAllFacilities(),
       quickActions: ["Mahishi PHC", "Sonbarsa PHC", "📞 हेल्पलाइन"],
     };
+  }
+
+  // 4b. Abbreviation Dictionary Lookup
+  // Extract potential abbreviation from the query
+  const cleanQuery = lower.replace(/(full form|का मतलब|क्या है|means|meaning|in hindi|in english|what is|\?)/gi, "").trim();
+  const directMatch = findAbbreviation(cleanQuery) || findAbbreviation(lower);
+  if (directMatch) {
+    return {
+      text: formatAbbreviationResponse(directMatch),
+      quickActions: ["संक्षिप्त नाम सूची", "ASHA गाइड", "📞 हेल्पलाइन"],
+    };
+  }
+  // Also check if any abbreviation appears in the text when asked about meaning
+  if (lower.includes("full form") || lower.includes("मतलब") || lower.includes("क्या है")) {
+    const foundAbb = abbreviations.find(a => lower.includes(a.term.toLowerCase()));
+    if (foundAbb) {
+      return {
+        text: formatAbbreviationResponse(foundAbb),
+        quickActions: ["संक्षिप्त नाम सूची", "ASHA गाइड"],
+      };
+    }
   }
 
   // 5. Contact/Phone numbers (generic)
