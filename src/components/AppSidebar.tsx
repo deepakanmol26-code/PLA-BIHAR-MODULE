@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, Home, Search, Bookmark, StickyNote, ChevronDown, MessageCircle, UserCheck, MapPin, ExternalLink, BookText } from "lucide-react";
+import { BookOpen, Home, Search, Bookmark, StickyNote, ChevronDown, MessageCircle, UserCheck, MapPin, ExternalLink, BookText, Gamepad2 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { usePathname } from "next/navigation";
 import {
@@ -18,6 +18,7 @@ const topItems = [
   { title: "बुकमार्क", url: "/bookmarks", icon: Bookmark, color: "text-amber-600 dark:text-amber-400" },
   { title: "मेरे नोट्स", url: "/notes", icon: StickyNote, color: "text-cyan-600 dark:text-cyan-400" },
   { title: "संक्षिप्त नाम", url: "/abbreviations", icon: BookText, color: "text-indigo-600 dark:text-indigo-400" },
+  { title: "🎮 Health Hero गेम", url: "/game", icon: Gamepad2, color: "text-rose-600 dark:text-rose-400" },
   { title: "सहायता चैटबॉट", url: "#chatbot", icon: MessageCircle, color: "text-orange-600 dark:text-orange-400" },
 ];
 
